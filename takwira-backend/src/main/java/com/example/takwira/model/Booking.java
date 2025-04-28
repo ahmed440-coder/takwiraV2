@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Booking {
 
     @Id 
-    private Long id;
+    private String id;
     private Stadium stadium;  // Assuming you have a Stadium entity
     private User user;  // Assuming you have a User entity
     private LocalDateTime bookingDateTime;
@@ -27,11 +27,11 @@ public class Booking {
         this.bookingDateTime = bookingDateTime;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

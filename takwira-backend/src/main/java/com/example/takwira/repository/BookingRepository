@@ -1,9 +1,0 @@
-package com.example.takwira.repository;
-
-import com.example.takwira.model.Booking;
-import org.springframework.data.mongodb.repository.MongoRepository;
-
-
-public interface BookingRepository extends MongoRepository<Booking, Long> { 
-    // You can add custom queries if needed, like find by user, stadium, etc.
-}
