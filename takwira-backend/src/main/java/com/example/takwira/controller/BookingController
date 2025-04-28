@@ -1,0 +1,22 @@
+package com.example.takwira.controller;
+
+import com.example.takwira.model.Booking;
+import com.example.takwira.service.BookingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/booking")
+public class BookingController {
+
+    @Autowired
+    private BookingService bookingService;
+
+    @PostMapping
+    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
+        // Save the booking to the database
+        Booking savedBooking = bookingService.saveBooking(booking);
+        return ResponseEntity.ok(savedBooking);
+    }
+}
