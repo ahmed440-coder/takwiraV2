@@ -25,6 +25,7 @@ public class BookingService {
                 b.getBookingDateTime() != null && b.getBookingDateTime().equals(booking.getBookingDateTime())) {
                 throw new RuntimeException("Stadium already booked for this date/time");
             }
+            
         }
         return bookingRepository.save(booking);
     }

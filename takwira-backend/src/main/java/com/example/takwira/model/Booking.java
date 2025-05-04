@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
-@Document(collection = "Stadium")
+@Document(collection = "booking")
 @Data
 @Builder
 @NoArgsConstructor
@@ -58,4 +58,5 @@ public class Booking {
     public void setBookingDateTime(LocalDateTime bookingDateTime) {
         this.bookingDateTime = bookingDateTime;
     }
+    
 }

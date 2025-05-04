@@ -13,9 +13,10 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @PostMapping
+    @PostMapping("/book")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
         // Save the booking to the database
+        System.out.println("***********************booking:" + booking);
         Booking savedBooking = bookingService.saveBooking(booking);
         return ResponseEntity.ok(savedBooking);
     }
