@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Admin = () => {
   const stats = [
@@ -14,16 +14,42 @@ const Admin = () => {
     { name: 'Ahmed Jlassi', time: 'Today 20:00', status: 'Confirmed' }
   ];
 
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const [showSummary, setShowSummary] = useState(false);
+
+  // Example: simulate loading and error for demonstration
+  const handleAction = async () => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    try {
+      // Simulate async admin action
+      await new Promise(res => setTimeout(res, 1000));
+      setSuccessMsg('Admin action completed successfully!');
+    } catch (e) {
+      setErrorMsg('Something went wrong.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white px-6 py-10 pt-40">
       <h1 className="text-3xl font-bold mb-8 text-red-500">Admin Dashboard</h1>
+
+      {errorMsg && <div className="bg-red-700 text-white p-2 rounded text-center text-xs mb-4">{errorMsg}</div>}
+      {successMsg && <div className="bg-green-600 text-white p-2 rounded text-center text-xs mb-4">{successMsg}</div>}
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
         {stats.map((stat, idx) => (
           <div
             key={idx}
-            className={`rounded-xl p-6 ${stat.color} shadow-lg text-center hover:scale-105 transition`}
+            className={`rounded-xl p-6 ${stat.color} shadow-lg text-center hover:scale-105 transition focus-within:ring-2 focus-within:ring-red-400`}
+            tabIndex={0}
+            aria-label={stat.label}
           >
             <h2 className="text-xl font-bold">{stat.value}</h2>
             <p className="text-sm opacity-80 mt-2">{stat.label}</p>
@@ -45,7 +71,7 @@ const Admin = () => {
             </thead>
             <tbody>
               {recentBookings.map((booking, index) => (
-                <tr key={index} className="border-b border-gray-700 hover:bg-gray-700 transition">
+                <tr key={index} className="border-b border-gray-700 hover:bg-gray-700 transition" tabIndex={0} aria-label={`Booking for ${booking.name} at ${booking.time}`}> 
                   <td className="py-3">{booking.name}</td>
                   <td className="py-3">{booking.time}</td>
                   <td className={`py-3 font-semibold ${booking.status === 'Confirmed' ? 'text-green-400' : 'text-yellow-300'}`}>
@@ -56,6 +82,9 @@ const Admin = () => {
             </tbody>
           </table>
         </div>
+        <button onClick={handleAction} className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-full transition duration-300" aria-label="Simulate Admin Action" disabled={loading}>
+          {loading ? 'Processing...' : 'Simulate Admin Action'}
+        </button>
       </div>
     </div>
   );

@@ -35,14 +35,14 @@ const Calendar = ({ stadium }) => {
 
   const handleBooking = (dateStr, time) => {
     // Redirecting to the booking page with query params
-    navigate(`/booking?stadium=${stadium.name}&day=${dateStr}&time=${time}`);
+    navigate(`/booking?stadium=${stadium.stadiumName}&day=${dateStr}&time=${time}`);
   };
 
   return (
     <div className="space-y-10 mt-10" id="calendar">
       {/* Week navigation */}
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-extrabold text-red-400">{stadium.name}</h2>
+        <h2 className="text-3xl font-extrabold text-red-400">{stadium.stadiumName}</h2>
         <div className="space-x-2">
           <button
             onClick={handlePreviousWeek}
@@ -126,7 +126,7 @@ const StadiumSelection = () => {
   
 
   const handleSelectStadium = (stadiumName) => {
-    const selected = stadiums.find(s => s.name === stadiumName);
+    const selected = stadiums.find(s => s.stadiumName === stadiumName);
     setSelectedStadium(selected);
     setCurrentImage(0);
   };
@@ -161,8 +161,7 @@ const StadiumSelection = () => {
                 </div>
                 <div className="mt-6 text-white">
                   <p className="text-lg font-semibold">Localisation: {selectedStadium.region}</p>
-                  <p className="mt-2">{selectedStadium.description}</p>
-                  <p className="mt-2">Capacité: {selectedStadium.capacity}</p>
+                 
                   <ul className="mt-2">
                     <li><strong>Équipements:</strong></li>
                     {selectedStadium.features && selectedStadium.features.length > 0 ? (
@@ -193,7 +192,7 @@ const StadiumSelection = () => {
 
               {/* Calendar */}
               <div ref={calendarRef}> {/* Attach ref to the calendar section */}
-                <Calendar stadium={selectedStadium.name} />
+                <Calendar stadium={selectedStadium} />
               </div>
             </motion.div>
           ) : (
@@ -207,17 +206,17 @@ const StadiumSelection = () => {
             >
               {stadiums.map((stadium) => (
                 <div
-                  key={stadium.name}
+                  key={stadium.stadiumName}
                   className="border rounded-xl overflow-hidden shadow-lg cursor-pointer hover:border-red-500 hover:scale-105 transform transition duration-300"
-                  onClick={() => handleSelectStadium(stadium.name)}
+                  onClick={() => handleSelectStadium(stadium.stadiumName)}
                 >
                   <img
                     src={`data:image/jpeg;base64,${stadium.image}`}
-                    alt={stadium.name}
+                    alt={stadium.stadiumName}
                     className="w-full h-56 object-cover"
                   />
                   <div className="p-4 text-center">
-                    <h3 className="text-lg font-semibold text-white">{stadium.name}</h3>
+                    <h3 className="text-lg font-semibold text-white">{stadium.stadiumName}</h3>
                     <p className="text-sm text-gray-300">{stadium.location}</p>
                   </div>
                 </div>

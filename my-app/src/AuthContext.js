@@ -17,8 +17,11 @@ export const AuthProvider = ({ children }) => {
       });
 
       setUser(res.data);
-      localStorage.setItem('token', JSON.stringify(res.data));
-      const token = localStorage.getItem('token');
+      localStorage.setItem('token', res.data)
+      const token = localStorage.getItem('token')
+
+      console.log("------ token set ------",token)
+
       console.log("user logged in with the token : ",token);
       navigate('/dashboard');
     } catch (err) {

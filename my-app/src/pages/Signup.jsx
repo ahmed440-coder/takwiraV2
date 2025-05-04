@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Signup = () => {
   const [form, setForm] = useState({
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -34,14 +35,24 @@ const Signup = () => {
     }
 
     try {
-      
+      const formData = new FormData();
+      formData.append('username', form.name);
+      formData.append('email', form.email);
+      formData.append('password', form.password);
+      if (form.birthdate) {
+        const date = new Date(form.birthdate);
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
+        formData.append('birthday', `${yyyy}-${mm}-${dd}`);
+      }
+      if (form.cin) {
+        formData.append('cin', String(form.cin).replace(/\D/g, ''));
+      }
+      formData.append('phoneNumber', form.phone);
 
-      const response = await axios.post('http://localhost:8081/api/auth/register', {
-        email: form.email,
-        password: form.password,
-        birthdate: form.birthdate,
-        cin: form.cin,
-        phone: form.phone,
+      const response = await axios.post('http://localhost:8081/api/auth/register', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       console.log("Registration successful:", response.data);
@@ -57,6 +68,16 @@ const Signup = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-red-800 text-white px-4">
       <form onSubmit={handleSubmit} className="bg-black p-8 rounded-xl shadow-2xl w-full max-w-md space-y-6">
         <h2 className="text-3xl font-bold text-center mb-6">Create Account</h2>
+
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={handleChange}
+          className="w-full p-3 rounded bg-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500"
+          required
+        />
 
         <input
           type="email"
